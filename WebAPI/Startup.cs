@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI.Repository;
 using WebAPI.Service;
 using WebAPI.Service.Impl;
 
@@ -27,6 +29,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ClienteService, ClienteServiceImpl>();
+            services.AddDbContext<AppDbContext> (o => o.UseMySQL(Configuration.GetConnectionString("MyDb")));
             services.AddControllers();
         }
 
